@@ -1,0 +1,43 @@
+class Dijkstra():
+ 
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = [[0 for column in range(vertices)]
+                      for row in range(vertices)]
+    def solution(self, dist):
+        print("note \t Distance ")
+        for node in range(self.V):
+            print("",node, "\t\t\t\t", dist[node])
+    def min(self, dist, sptSet):
+        min = 1e7
+        for v in range(self.V):
+            if dist[v] < min and sptSet[v] == False:
+                min = dist[v]
+                min_index = v
+        return min_index
+    def di(self, src):
+        dist = [1e7] * self.V
+        dist[src] = 0
+        sptSet = [False] * self.V
+        for cout in range(self.V):
+            u = self.min(dist, sptSet)
+            sptSet[u] = True
+            for v in range(self.V):
+                if (self.graph[u][v] > 0 and
+                   sptSet[v] == False and
+                   dist[v] > dist[u] + self.graph[u][v]):
+                    dist[v] = dist[u] + self.graph[u][v]
+        self.solution(dist)
+g = Dijkstra(9)
+g.graph =  [[0, 4, 0, 0, 0, 0, 0, 7, 0],
+            [4, 0, 9, 0, 0, 0, 11, 20, 0],
+            [0, 9, 0, 6, 2, 0, 0, 0, 0],
+            [0, 0, 6, 0, 10, 5, 0, 0, 0],
+            [0, 0, 2, 10, 0, 15, 0, 1, 5],
+            [0, 0, 0, 5, 15, 0, 0, 0, 12],
+            [7, 11, 0, 0, 0, 0, 0, 1, 0],
+            [0, 20, 0, 0, 1, 0, 1, 0, 3],
+            [0, 0, 0, 0, 5, 12, 0, 3, 0]
+            ]
+ 
+g.di(0)
